@@ -1,0 +1,59 @@
+{{ include("header.twig") }}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>Įėjimo puslapis</h1>
+    </div>
+</header>
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Įėjimas</h2>
+                <br>
+			{% if errorMessage is not empty %}
+			<div class="alert alert-warning" role="danger">
+                        	{{ errorMessage }}
+                        </div>
+			{% endif %}
+                <form method="post" action="/authenticateUser">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Elektroninis paštas</label>
+                        	<input name="pastas" type="email" class="form-control" id="exampleInputPastas1" aria-describedby="emailHelp" placeholder="Iveskite pasta" onkeyup='saveValue(this)' >
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Slaptažodis</label>
+                        <input name="slaptazodis" type="password" class="form-control" id="exampleInputSlaptazodis1" placeholder="Iveskite slaptazodi" onkeyup='saveValue(this)'>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Įeiti</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+        document.getElementById("exampleInputPastas1").value = getSavedValue("exampleInputPastas1");
+        document.getElementById("exampleInputSlaptazodis1").value = getSavedValue("exampleInputSlaptazodis1"); 
+        /* Here you can add more inputs to set value. if it's saved */
+
+        //Save the value function - save it to sessionStorage as (ID, VALUE)
+        function saveValue(e){
+            var id = e.id;  // get the sender's id to save it . 
+            var val = e.value; // get the value. 
+            	sessionStorage.setItem(id, val);// Every time user writing something, the sessionStorage's value will override
+        }
+
+        //get the saved value function - return the value of "v" from sessionStorage. 
+        function getSavedValue  (v){
+            if (!sessionStorage.getItem(v)) {
+                return "";// You can change this to your defualt value. 
+            }
+			return sessionStorage.getItem(v);
+        }
+</script>
+
+{{ include("footer.twig") }}
